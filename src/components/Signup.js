@@ -1,30 +1,30 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link ,useNavigate} from 'react-router-dom'
 import { UserAuth } from '../context/AuthContext'
 const Signup = () => {
   const [email,setEmail] = useState('')
   const [password,setPassword] = useState('')
   const [error, setError] = useState('')
-
   const {createUser} = UserAuth()
-
+  const navigate = useNavigate()
   const handleSubmit = async(e) => {
     e.preventDefault()
     setError('')
     try {
       await createUser(email,password)
+      navigate('/account')
     } catch (e) {
       setError(e.message)
-      alert(e.message)
+      console.log(e.message)
     }
   }
   return (
     <div className='max-w-[700px] mx-auto my-16 p-4'>
       <div>
-        <h1 className='text-2xl font-bold py-2'> Sign in to your account </h1>
+        <h1 className='text-2xl font-bold py-2'> Sign up to your account </h1>
         <p className='py-2'>
           Already have a account ?
-          <Link to='/' className='underline'>Sign in </Link>
+          <Link to='/' className='underline'>Sign in  </Link>
         </p>
       </div>
       <form onSubmit={handleSubmit}>
